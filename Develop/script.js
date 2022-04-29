@@ -1,21 +1,11 @@
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
-let passwordLength = 8;
+let passwordLength = 128;
 let special= true;
-let upper = false;
+let upper = true;
 let shouldNum = true;
 
-// Write password to the #password input
-function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-  passwordText.value = password.join("");
-  // passwordLength = parseInt(window.prompt('length of password'))
 
-}
-
-// Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
 
 /** Arrays needed for password */
 const alphabet = [
@@ -76,42 +66,39 @@ const shuffleArray = (array) => {
 /** function to generate minimum 8 char password with all char */
 const passwordGenerate8All = () => {
   while (password.length < 6) {
-    if (upper && special && shouldNum) {  
     password.push(
       getRandom(alphabet),
       getRandom(alphabet).toUpperCase(),
       getRandom(specialArr),
-      getRandom(numArr)
+      getRandom(numArr),
+   
     );
+  
     }
-    else if (!upper && special && shouldNum){
-      password.push(
-        getRandom(alphabet),
-        getRandom(specialArr),
-        getRandom(numArr)
-      );
-    }
-  }
   return password;
 };
+
 const remainingPasswordAll = () => {
   passwordGenerate8All();
-  while (password.length < lengthRequired) {
-    if (upper && special && shouldNum) {
+  while (password.length < passwordLength) {
     password.push(getRandom(allCharArr));
   }
-}
+
   return password;
 };
+
+
 const generatePassword = () => {
   remainingPasswordAll();
   shuffleArray(password);
   return password;
 };
-generatePassword();
 
-// console.log(password.join(""));
-// console.log(password.length);
+generatePassword()
+console.log(password.join(""));
+console.log(password.length);
+
+
 // /** slider functionality */
 
 
@@ -130,3 +117,15 @@ slider.oninput = function () {
       slider.style.background=color;
   });
 };
+
+// Write password to the #password input
+function writePassword() {
+  var password = generatePassword();
+  var passwordText = document.querySelector("#password");
+  passwordText.value = password.join("");
+  // passwordLength = parseInt(window.prompt('length of password'))
+
+}
+
+// // Add event listener to generate button
+generateBtn.addEventListener("click", writePassword);
