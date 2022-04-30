@@ -1,13 +1,15 @@
-// Get references to the #generate element
-var generateBtn = document.querySelector("#generate");
-let passwordLength = 128;
-let special= true;
-let upper = true;
-let shouldNum = true;
-
+/* query selectors for DOM*/
+const generateBtn = document.querySelector("#generate");
+const slider = document.getElementById("my-range");
+const output = document.getElementById("value");
+const chooseLower = document.getElementById('lowercase')
+const chooseUpper = document.getElementById('uppercase')
+const chooseSpecial = document.getElementById ('special')
+const chooseNumber =document.getElementById('number')
 
 
 /** Arrays needed for password */
+let password = [];
 const alphabet = [
   "a",
   "b",
@@ -42,18 +44,35 @@ const alphaUpper = alphabet.map((letter) => {
 const specialArr = ["!", "@", "#", "%", "?", "&"];
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const allCharArr = [...alphabet, ...alphaUpper, ...specialArr, ...numArr];
-const noUpper = [...alphabet, ...specialArr, ...numArr]
-const noSpecial = [...alphabet, ...alphaUpper, ...numArr]
-const noNum= [...alphabet, ...alphaUpper,...specialArr]
+const arrOfAll = [alphabet, alphaUpper, specialArr, numArr];
 
+// const noUpper = [...alphabet, ...specialArr, ...numArr]
+// const noSpecial = [...alphabet, ...alphaUpper, ...numArr]
+// const noNum= [...alphabet, ...alphaUpper,...specialArr]
 
-let password = [];
-let lengthRequired = 128;
+/** function to identify what the user wants */
+let userChoice = []
+const createUserChoiceArr = () =>{
+if (chooseLower.checked) {
+  userChoice.push(0)
+}
+if (chooseUpper.checked){
+  userChoice.push(1)
+}
+if (chooseSpecial.checked){
+  userChoice.push(2)
+}
+if (chooseNumber.checked){
+  userChoice.push(3)
+}
+return userChoice
+}
 
-/** Get something random from an Array */
+/** Function to get random index from an Array */
 const getRandom = (arr) => {
   return arr[Math.floor(Math.random() * arr.length)];
 };
+
 /** Durstenfeld Shuffle to shuffle array */
 const shuffleArray = (array) => {
   for (var i = array.length - 1; i > 0; i--) {
@@ -63,38 +82,61 @@ const shuffleArray = (array) => {
     array[j] = temp;
   }
 };
+
+/** create main array for for random characters */
+
+let arrForPassword = []
+
+const pushToArrForPassword = () => {
+  createUserChoiceArr()
+  for (i=0 ; i<userChoice.length; i++){
+   arrForPassword.push(arrOfAll[userChoice[i]])
+  } 
+  return arrForPassword.flat()
+ }
+
 /** function to generate minimum 8 char password with all char */
 const passwordGenerate8All = () => {
-  while (password.length < 6) {
-    password.push(
-      getRandom(alphabet),
-      getRandom(alphabet).toUpperCase(),
-      getRandom(specialArr),
-      getRandom(numArr),
-   
-    );
-  
-    }
-  return password;
-};
 
-const remainingPasswordAll = () => {
-  passwordGenerate8All();
-  while (password.length < passwordLength) {
-    password.push(getRandom(allCharArr));
+  if (chooseLower.checked){
+    
+    password.push(getRandom(alphabet));
+  }
+  if (chooseUpper.checked){
+    password.push (getRandom(alphabet).toUpperCase())
+  }
+  if (chooseSpecial.checked){
+    password.push (getRandom(specialArr))
+  }
+  if (chooseNumber.checked){
+    password.push (getRandom(numArr))
   }
 
   return password;
 };
 
+/** fill remains spots in the password array */
 
-const generatePassword = () => {
-  remainingPasswordAll();
-  shuffleArray(password);
+const remainingPasswordAll = () => {
+passwordGenerate8All()
+  while (password.length < slider.value) {
+    password.push(getRandom(pushToArrForPassword()));
+  }
+  
   return password;
 };
 
-generatePassword()
+
+const generatePassword = () => {
+remainingPasswordAll()
+
+  shuffleArray(password);
+
+  return password;
+ 
+};
+
+// generatePassword()
 console.log(password.join(""));
 console.log(password.length);
 
@@ -103,8 +145,6 @@ console.log(password.length);
 
 
 /** advanced selectors for dom */
-const slider = document.getElementById("my-range");
-const output = document.getElementById("value");
 
 
 output.innerHTML = slider.value;
@@ -127,5 +167,18 @@ function writePassword() {
 
 }
 
+/** function to add or remove checked status on radio button */
+
+function uncheck(button){
+  if (button.checked) {
+    button.checked = false
+  }
+
+}
+
 // // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
+
+/** Event listeners to check and uncheck selections */
+chooseLower.addEventListener ('change',uncheck(chooseLower))
+

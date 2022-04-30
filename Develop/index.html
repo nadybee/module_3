@@ -19,7 +19,7 @@
         <!-- <div class="hidden">  -->
         <form class="criteria" id="criteria">
           <div class="choose-label">
-          <h5> please choose some password critera</h5> <p>(must choose at lease one)</p>
+          <h5> please choose your password critera</h5> <p>(must choose at lease one)</p>
         </div>
           <p class="password-length">password length: &nbsp;  <span id="value"></span></p>
           <div class="slider-main">
@@ -38,13 +38,25 @@
           </div>
 <div class="select-options"> 
          <label for="lowercase" class="radio">
-           <input type="radio" name="" id="lowercase" class="radio-input">
+           <input type="checkbox" name="" id="lowercase" class="radio-input">
            <div class="radio-radio"></div>
            lowercase
          </label>
-
-
-
+         <label for="uppercase" class="radio">
+          <input type="checkbox" name="" id="uppercase" class="radio-input">
+          <div class="radio-radio"></div>
+          UPPERCASE
+        </label>
+        <label for="special" class="radio">
+          <input type="checkbox" name="" id="special" class="radio-input">
+          <div class="radio-radio"></div>
+        special characters
+        </label>
+        <label for="number" class="radio">
+          <input type="checkbox" name="" id="number" class="radio-input">
+          <div class="radio-radio"></div>
+        numbers
+        </label>
         </div>
         </form>
       </div>
@@ -60,7 +72,7 @@
           <button id="generate" class="btn">Generate Password</button>
         </div>
       </div>
-    </div>
+
     <script src="script.js"></script>
   </body>
 </html>
