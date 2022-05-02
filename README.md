@@ -14,3 +14,8 @@ One character selection in required, I added a error validation if one is not se
 The password is generated from the built array of users selections, then shuffled to increase the randomness.
 
 I had to do a lot of debugging to get the password working right! It was kind of fun actually!
+
+## Live page can be found here:
+https://nadybee.github.io/module_3/
+
+![Alt text](/Screen%20Shot%202022-05-02%20at%207.42.14%20AM.png)
