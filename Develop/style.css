@@ -58,7 +58,7 @@ header {
 
 .card-footer {
   text-align: center;
- margin: 0 auto;
+  margin: 0 auto;
   max-width: 800px;
 }
 
@@ -76,9 +76,6 @@ header {
   clear: both;
 }
 
-.hidden {
-  display: none;
-}
 
 .btn {
   border: none;
@@ -125,24 +122,14 @@ button[disabled] {
   overflow: hidden;
 }
 
-#criteria {
-
+/* user selection section */
+.criteria {
   display: flex;
   flex-direction: column;
   width: 100%;
-
 }
 
-.criteria input {
-
-  margin: 10px;
-}
-
-#amountInput {
-  padding: 10px;
-  width: 20%
-}
-
+/* password length slider*/
 .slider-main {
   display: flex;
   flex-direction: column;
@@ -151,8 +138,6 @@ button[disabled] {
   padding-bottom: 12px;
   justify-content: center;
   align-items: center;
-
-
 }
 
 .password-length {
@@ -163,33 +148,20 @@ button[disabled] {
   font-weight: 600;
 }
 
-.choose-label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 0;
-}
-
-.choose-label p {
-  font-size: 14px;
-  padding-left: 24px;
-}
-
 .slider {
   -webkit-appearance: none;
   width: 80%;
   height: 10px;
-  background: linear-gradient(90deg, hsl(360, 91%, 36%) 6%, lightgray 0%);
+  background: linear-gradient(90deg, hsl(360, 91%, 36%) 0%, lightgray 0%);
   outline: none;
   opacity: 0.7;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
   border-radius: 10px;
-  /* box-shadow: 0px 1px 10px 1px grey; */
 }
 
 .slider:hover {
   opacity: 1;
-
 }
 
 .slider::-webkit-slider-thumb {
@@ -200,7 +172,6 @@ button[disabled] {
   background-color: lightgrey;
   border-radius: 50%;
   cursor: pointer;
-
 }
 
 .slider::-moz-range-thumb {
@@ -216,6 +187,33 @@ button[disabled] {
   display: flex;
   justify-content: space-between;
   width: 80%;
+}
+
+/* selection checkboxes*/
+.choose-one {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.choose-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.choose-label p {
+  font-size: 14px;
+  padding-left: 24px;
+}
+
+/* #required to hide error validation*/
+.hidden {
+  display: none;
+}
+
+#required {
+  color: red;
+  margin-left: 36px;
 }
 
 #select-value {
@@ -283,9 +281,6 @@ button[disabled] {
 
 .radio-input:checked+.radio-radio::after {
   transform: scale(1);
-
-
-
 }
 
 
@@ -305,7 +300,7 @@ button[disabled] {
   .select-options {
     flex-direction: column;
   }
-  
+
   .radio {
     padding-bottom: 10px;
   }

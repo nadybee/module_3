@@ -6,6 +6,8 @@ const chooseLower = document.getElementById("lowercase");
 const chooseUpper = document.getElementById("uppercase");
 const chooseSpecial = document.getElementById("special");
 const chooseNumber = document.getElementById("number");
+const required = document.getElementById("required");
+const selectors = document.querySelectorAll('radio-radio')
 
 /** Arrays needed for password */
 let password = [];
@@ -37,9 +39,7 @@ const alphabet = [
   "y",
   "z",
 ];
-const alphaUpper = alphabet.map((letter) => {
-  return letter.toUpperCase();
-});
+const alphaUpper = alphabet.map((letter) => letter.toUpperCase());
 const specialArr = ["!", "@", "#", "%", "?", "&"];
 const numArr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const arrOfAll = [alphabet, alphaUpper, specialArr, numArr];
@@ -47,8 +47,9 @@ const arrOfAll = [alphabet, alphaUpper, specialArr, numArr];
 /**-------------FUNCTIONS---------------------*/
 
 /** function to create array of user critera selections */
-let userChoice = [];
+
 const createUserChoiceArr = () => {
+  let userChoice= [];
   if (chooseLower.checked) {
     userChoice.push(0);
   }
@@ -66,12 +67,13 @@ const createUserChoiceArr = () => {
 
 /** create main array from user selection to choose password characters */
 
-let arrForPassword = [];
+
 
 const pushToArrForPassword = () => {
-  createUserChoiceArr();
-  for (i = 0; i < userChoice.length; i++) {
-    arrForPassword.push(arrOfAll[userChoice[i]]);
+  let arrForPassword = [];
+ let userChoiceValue = createUserChoiceArr();
+  for (i = 0; i < userChoiceValue.length; i++) {
+    arrForPassword.push(arrOfAll[userChoiceValue[i]]);
   }
   return arrForPassword.flat();
 };
@@ -110,6 +112,7 @@ const passwordGenerateAll = () => {
 /** fill remains spots in the password array */
 const remainingPasswordAll = () => {
   passwordGenerateAll();
+  
   while (password.length < slider.value) {
     password.push(getRandom(pushToArrForPassword()));
   }
@@ -118,12 +121,14 @@ const remainingPasswordAll = () => {
 
 /** Generates final password and shuffles it */
 const generatePassword = () => {
+
   remainingPasswordAll();
 
   shuffleArray(password);
-
-  return password;
-};
+  
+  return password
+  } 
+  
 
 /** --------User Selection functionality ------------ */
 
@@ -133,7 +138,8 @@ output.innerHTML = slider.value;
 slider.oninput = function () {
   output.innerHTML = this.value;
   slider.addEventListener("input", function () {
-    let x = slider.value * 0.78;
+    let x = (slider.value-4) *.78
+   
     var color = `linear-gradient(90deg, hsl(360, 91%, 36%) ${x}%, lightgray ${x}%)`;
     slider.style.background = color;
   });
@@ -141,11 +147,30 @@ slider.oninput = function () {
 
 // Write password to the #password input
 function writePassword() {
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
+ password =[]
+  //validate if user has chosen at least one
+  if (chooseLower.checked || chooseUpper.checked || chooseSpecial.checked || chooseNumber.checked) {
+  password = generatePassword();
+  let passwordText = document.querySelector("#password");
   passwordText.value = password.join("");
 }
+else {
+  //show error validation
+  required.classList.remove('hidden')
 
+}
+};
+
+function isChecked () {
+  if (chooseLower.checked || chooseUpper.checked || chooseSpecial.checked || chooseNumber.checked) {
+required.classList.add('hidden')
+}
+}
+//remove error validation
+chooseLower.addEventListener('click', isChecked )
+chooseUpper.addEventListener('click', isChecked )
+chooseSpecial.addEventListener('click', isChecked )
+chooseNumber.addEventListener('click', isChecked )
 
 // // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
